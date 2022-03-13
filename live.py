@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 import av
 import cv2
 
@@ -21,11 +21,11 @@ class VideoProcessor:
 
 
 ctx = webrtc_streamer(
-    key="example",
+    key="key",
     video_processor_factory=VideoProcessor,
-    rtc_configuration={
+    rtc_configuration=RTCConfiguration({
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
-    }
+    })
 )
 if ctx.video_processor:
     ctx.video_processor.threshold1 = st.slider("Threshold1", min_value=0, max_value=1000, step=1, value=100)
